@@ -7,18 +7,17 @@ import java.util.Random;
 
 public class Uke2 {
 
-       public static void main(String [] args){
-            int tabelA[] = {9, 2, 3, 4, 1, 55, 6};
+       public static void main(String[] args){
+            int tabelA[] = {6, 2, 3, 9, 5, 4, 12};
             int tabelB[] = {22, 3,43, 9, 6};
 
-            //Metoden for nest høyeste verdi i tabellen
-        /*int d[] = Table.randPerm(15);
-        int[] c = getNextMaxNumberInArrayWithTurnementTree(d);
-        System.out.println(c);*/
-            //slutt
+       
 
-            //Metode for å finne nest største nr{
-            // }
+            //Metoden for nest høyeste verdi i tabellen
+        int d[] = Uke2.randPerm(15);
+        int c = findSecondLargestNumberInArray(d, d.length);
+        System.out.println(c);
+            //slutt
 
 
 
@@ -38,11 +37,7 @@ public class Uke2 {
             Uke2 b = new Uke2();
             b.bytt(tabelB, 1, 2);
             System.out.println(Arrays.toString(tabelB));
-            //alutt
-
-
-
-
+            //slutt
 
 
             //Finne index og elle posisjon til minimum og maksimumverdi i en tabell/array
@@ -50,6 +45,7 @@ public class Uke2 {
             System.out.println(min2(tabelB, 0,4));
             System.out.println(max1(tabelA, 2,6));
             System.out.println( max2(tabelB, 0,4));
+            System.out.println("Tredje minste tallet i A er "+ findThirdSmallestNumberInArray(tabelA));
             //slutt
 
 
@@ -58,14 +54,20 @@ public class Uke2 {
             //slutt
 
             //Metode som skriver ut tallene i intervallet fra x til y
-            System.out.println(skriv(tabelA, 0, 5));
+            skriv(tabelB, 1, 4);
+
+
+            //Reversere ett array
+
+           reverseArrayClass rac = new reverseArrayClass();
+           rac.reverseArray(tabelA, tabelA.length);
         }
 
 
 
         //Oppgave 1.5 til seksjon 1.2.1 uke 34
         public static String min1(int [] inputArray, int from, int to) { //fra venstre grense til høyre grense
-            Uke1.fromToControl(inputArray.length, from, to);  //kontroll
+            Tabell.fromToControl(inputArray.length, from, to);  //kontroll
 
             int m = from; //indeks til minste verdi i a [from: to>
             int min_value= inputArray[m]; //minste verdien i a[from: to>
@@ -82,7 +84,7 @@ public class Uke2 {
 
 
         public static String min2(int [] inputArray, int left, int right){ //fra og med venstre grenst til og med høyre grense
-            Uke1.fromToControl(inputArray.length, left, right); //kontroll
+            Tabell.fromToControl(inputArray.length, left, right); //kontroll
 
         /*if (left < 0 || right > inputArray.length || left >= right) { //kontroll
             throw new IllegalArgumentException("Illegal value");
@@ -101,7 +103,7 @@ public class Uke2 {
         }
 
         public static String max1(int [] inputArray, int from, int to) { //fra venstre grense til høyre grense
-            Uke1.fromToControl(inputArray.length, from, to);  //kontroll
+            Tabell.fromToControl(inputArray.length, from, to);  //kontroll
 
             int m = from; //indeks til minste verdi i a [from: to>
             int max_value= inputArray[m]; //minste verdien i a[from: to>
@@ -118,7 +120,7 @@ public class Uke2 {
 
 
         public static String max2(int [] inputArray, int left, int right){ //fra og med venstre grenst til og med høyre grense
-            Uke1.fromToControl(inputArray.length, left, right); //kontroll
+            Tabell.fromToControl(inputArray.length, left, right); //kontroll
 
             int m = left;
             int max_value = inputArray[m];
@@ -134,7 +136,9 @@ public class Uke2 {
 
 
         public static void bytt(int [] a, int i, int j){
-            int temp = a[i]; a[i] = a[j]; a[j] = temp;
+            int temp = a[i];
+            a[i] = a[j];
+            a[j] = temp;
         }
 
         public static int[] randPerm(int n){ //Metode for å generere en unik liste med n tall
@@ -160,43 +164,85 @@ public class Uke2 {
             return list;
         }
 
-        public static int skriv(int [] a, int from, int to){ // 1.2.2 4:Metode som skriver ut tallene i intervallet fra til
-            Uke1.fromToControl(a.length, from, to);
+        public static void skriv(int [] a, int from, int to){ // 1.2.2 4:Metode som skriver ut tallene i intervallet fra til
+            Tabell.fromToControl(a.length, from, to);
 
-            int f = from;
+System.out.print("Tallene i arrayet fra index "+from+" til "+to+" er: ");
 
-            for (int i = from; i <= to; i++) {
-                f = a[i];
+for (int i = from; i <= to; i++) {
+    System.out.print(a[i] + " ");
+}
+        }
+
+        public static void skrivln(int [] a, int from, int to){
+           for (int i = from; i <= to; i++){
+               System.out.println(a[i]);
+           }
+        }  //1.2.2 5: Skal også skrive ut verdiene i arrayet fra til, med linjeskift
+
+   public static int findSecondLargestNumberInArray(int [] inputArray, int total){
+      int temp;
+
+      for (int i = 0; i < total; i++){
+         for (int j = i+1; j <total; j++){
+             if (inputArray[i] > inputArray[j]){
+                 temp= inputArray[i];
+                 inputArray[i] = inputArray[j];
+                 inputArray[j] = temp;
+             }
+         }
+      }
+      return inputArray[total-2];
+
+
+    }
+
+    public static int findThirdSmallestNumberInArray(int[] a){
+        int n = a.length;
+        int min = 0;
+        int secondSmallest = 0;
+        int thirdSmallest = 0;
+        for(int i=1;i<n;i++){
+            if(a[i] < a[min]){
+                min = i;
+            }else if(a[i] < a[secondSmallest]){
+                secondSmallest = i;
+            }else if(a[i]< a[thirdSmallest]){
+                thirdSmallest = i;
             }
-            return f;
-        } //ikke fungerende, skriver ut høyste verdi i arrayet fra
-
-
-
-        public static int skrivln(int [] a, int from, int to){ return 0;}  //1.2.2 5: Skal også skrive ut verdiene i arrayet fra til, med linjeskift
-
-   /* public static int[] getNextMaxNumberInArrayWithTurnementTree(int [] inputArray){
-        int n = inputArray.length; //tabellens lengde
-
-        if (n < 2){
-            throw new java.util.NoSuchElementException("inputArray.length("+n+")<2!");
         }
 
-        int m = AlgoritmerOgDataStrukturer.getLargestNumberInArray(inputArray);
-        String nm;
+        return a[thirdSmallest];
+    }
 
-        if (m == 0){
-            nm = max1(inputArray, 1, n);
+    public static void vhKontroll(int tabellLengde, int v,int h){
+           if (v < 0){
+               throw new ArrayIndexOutOfBoundsException("v("+v+")<0");
+           }
+           if (h >= tabellLengde){
+               throw new ArrayIndexOutOfBoundsException("h("+h+")>= tablengde( "+tabellLengde+")");
+           }
+           if (v >h+1){
+               throw new IllegalArgumentException("v = "+v+",h = "+h);
+           }
+    }
+
+    public static class reverseArrayClass {
+
+        void reverseArray(int[] a, int n) {
+            int[] b = new int[n];
+            int j = n;
+            for (int i = 0; i < n; i++) {
+                b[j - 1] = a[i];
+                j = j - 1;
+            }
+
+            System.out.print("\nReversed array is: ");
+            for (int k = 0; k < n; k++){
+                System.out.print(b[k]+" ");
+            }
         }
-        else if (m == n-1){
-            nm = max1(inputArray, 0, n-1);
-        }
-        else {
-            String mv = max1(inputArray, 0, m);
-            String mh = max1(inputArray, m+1, n);
-            nm = inputArray[Integer.parseInt(mh)] > inputArray[Integer.parseInt(mv)]? mh:mv;
-        }
-        return new int[]{m, Integer.parseInt(nm)};
-    }*/
+    }
+
     }//Uke2
 

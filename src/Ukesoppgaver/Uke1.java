@@ -13,7 +13,7 @@ public class Uke1 {
             System.out.println("Smallest number in tabelA: "+getSmallestNumberInArray(tabelA));
             System.out.println("Smallest number in tabelA: "+getSmallestNumberInArray(tabelB));
             System.out.println("Lowest number in tabelA: "+getLowestNumberInArray(tabelA));
-            System.out.println("Largest number in array tabelA: "+getLargestNumberInArray(tabelA));
+            System.out.println("Largest number in array tabelA---------: "+getLargestNumberInArray(tabelA));
             System.out.println("Largest number in array tabelB: "+getLargestNumberInArray(tabelB));
             System.out.println("Position to smallest number in tabelA: "+ getPositionToSmallestNumberInArrray(tabelA));
             System.out.println("Position to smallest number in tabelB: "+ getPositionToSmallestNumberInArrray(tabelB));
@@ -39,13 +39,13 @@ public class Uke1 {
         } //main
 
         public static int getSmallestNumberInArray(int [] inputArray){
-            int maxValue = inputArray[0];
+            int minValue = inputArray[0];
             for (int i = 1; i < inputArray.length; i++){
-                if (inputArray[i] < maxValue){
-                    maxValue = inputArray[i];
+                if (inputArray[i] < minValue){
+                    minValue = inputArray[i];
                 }
             }
-            return maxValue;
+            return minValue;
         }
 
         public static int getLowestNumberInArray(int [] inputArray){ //Annen metode med samme utfall som getSmallestNumberinArray
@@ -199,17 +199,9 @@ public class Uke1 {
 
 
 
-        public static void fromToControl(int tableLength, int from, int to){  //Kontroll på input i min og max index metodene
-            if (from < 0){
-                throw new ArrayIndexOutOfBoundsException("from("+from+") is negative!");
-            }
-            if (to > tableLength){
-                throw new ArrayIndexOutOfBoundsException("to ("+to+")>table length ("+tableLength+")");
-            }
-            if (from > to){
-                throw new IllegalArgumentException("from ("+from+") > to ("+to+")- Illegal intervall");
-            }
-        }
+
+
+
 
 
         //Fortsette på oppgave 1.2.1
